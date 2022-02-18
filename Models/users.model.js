@@ -1,6 +1,4 @@
-const User = require("../Schemas/User.js");
 const Users = require("../Schemas/User.js");
-
 
 exports.fetchUsers = async () => {
   let query = await Users.find({});
@@ -9,14 +7,14 @@ exports.fetchUsers = async () => {
 };
 
 exports.postUser = async (body) => {
-  const { username, name, email, location, instruments, avatar_url } = body
+  const { username, name, email, location, instruments, avatar_url } = body;
   try {
-    await User.create({
+    await Users.create({
       username,
       avatar_url,
       name: {
         first: name.first,
-        last: name.last
+        last: name.last,
       },
       email,
       location: {
@@ -24,14 +22,22 @@ exports.postUser = async (body) => {
         city: location.city,
         country: location.country,
       },
-      instruments
-    })
-    let result = await User.find({ username: username })
-    return result
-
+      instruments,
+    });
+    let result = await Users.find({ username: username });
+    return result;
   } catch (error) {
-    console.log(error)
+    console.log(error);
   }
+};
 
+exports.deleteUser = async (body) => {
+  const { id } = body;
 
-}
+  try {
+    let result = await Users.deleteOne({ _id: id });
+    return result;
+  } catch (error) {
+    console.log(error);
+  }
+};
