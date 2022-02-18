@@ -1,7 +1,13 @@
-const {fetchUsers} = require('../Models/users.model');
+const { fetchUsers, postUser } = require('../Models/users.model');
 
 exports.getUsers = (req, res, next) => {
     fetchUsers().then((users) => {
-        res.status(200).send({users})
+        res.status(200).send({ users })
+    })
+}
+
+exports.saveUser = (req, res, next) => {
+    postUser(req.body).then(user => {
+        res.status(201).send({ user })
     })
 }

@@ -20,6 +20,7 @@
   "homepage": "https://github.com/Chris-Whitney/orchestrate-be#readme",
   "dependencies": {
     "express": "^4.17.3",
+    "express-router": "^0.0.1",
     "mongoose": "^6.2.2"
   },
   "devDependencies": {

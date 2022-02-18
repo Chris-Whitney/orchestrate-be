@@ -9,12 +9,12 @@ mongoose.connect(
   "mongodb+srv://Orchestrate:Nctcch22@caffeineo1.8izcc.mongodb.net/orchestrate"
 );
 
+const apiRouter = require('./routers/api.router');
+
 app.use(express.json());
 
-app.get("/users", getUsers);
+app.use("/api", apiRouter)
 
-app.get("/venues", getVenues);
 
-app.get("/groups", getGroups);
 
 module.exports = app;
