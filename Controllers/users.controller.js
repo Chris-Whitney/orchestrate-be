@@ -1,4 +1,4 @@
-const { fetchUsers, postUser, deleteUser } = require('../Models/users.model');
+const { fetchUsers, postUser, deleteUser, fetchSingleUser } = require('../Models/users.model');
 
 exports.getUsers = (req, res, next) => {
     fetchUsers().then((users) => {
@@ -15,5 +15,11 @@ exports.saveUser = (req, res, next) => {
 exports.removeUser = (req, res, next) => {
     deleteUser(req.body).then(() => {
         res.status(204).send({});
+    })
+}
+
+exports.getSingleUser = (req, res, next) => {
+    fetchSingleUser(req.params).then((user) => {
+        res.status(200).send({ user })
     })
 }

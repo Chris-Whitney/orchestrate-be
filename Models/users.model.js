@@ -41,3 +41,13 @@ exports.deleteUser = async (body) => {
     console.log(error);
   }
 };
+
+exports.fetchSingleUser = async (params) => {
+  const { userId } = params
+  try {
+    const query = await Users.findById(userId)
+    return query
+  } catch (error) {
+    console.log(error)
+  }
+}

@@ -43,3 +43,13 @@ exports.deleteVenue = async (body) => {
     console.log(error);
   }
 };
+
+exports.fetchSingleVenue = async (params) => {
+  const { venueId } = params
+  try {
+    const query = await Venues.findById(venueId)
+    return query
+  } catch (error) {
+    console.log(error)
+  }
+}

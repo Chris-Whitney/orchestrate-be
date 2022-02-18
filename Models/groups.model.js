@@ -35,3 +35,13 @@ exports.deleteGroup = async (body) => {
     console.log(error);
   }
 };
+
+exports.fetchSingleGroup = async (params) => {
+  const { groupId } = params
+  try {
+    const query = Groups.findById(groupId)
+    return query
+  } catch (error) {
+    console.log(error)
+  }
+}
