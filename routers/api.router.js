@@ -9,7 +9,9 @@ apiRouter.use('/users', userRouter)
 apiRouter.use('/groups', groupRouter)
 apiRouter.use('/venues', venueRouter)
 
-apiRouter.get('/', () => {
-   return ("hello")
+apiRouter.get('/', (req, res) => {
+   const instruction = require('../endpoints.json')
+   res.statusCode = 200;
+   res.json(instruction);
 })
 module.exports = apiRouter

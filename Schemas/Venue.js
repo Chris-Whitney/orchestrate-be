@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 
 const venueSchema = new mongoose.Schema({
-  name: String,
+  name: { type: String, unique: true },
   avatar_url: String,
   location: {
     street: String,

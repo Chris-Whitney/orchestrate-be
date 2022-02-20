@@ -1,20 +1,44 @@
 const express = require("express");
-const app = express();
-const { getUsers } = require("./Controllers/users.controller");
-const { getVenues } = require("./Controllers/venues.controller");
-const { getGroups } = require("./Controllers/groups.controller");
+const dotenv = require('dotenv')
+const apiRouter = require('./routers/api.router');
 const mongoose = require("mongoose");
 
-mongoose.connect(
-  "mongodb+srv://Orchestrate:Nctcch22@caffeineo1.8izcc.mongodb.net/orchestrate"
-);
+const app = express();
+dotenv.config()
 
-const apiRouter = require('./routers/api.router');
+mongoose.connect(process.env.DATABASE_URL);
+
 
 app.use(express.json());
 
 app.use("/api", apiRouter)
 
+// error handling: 
 
+app.all("*", (req, res) => {
+  res.status(404).send({ msg: "Invalid URL" });
+});
+app.use((err, req, res, next) => {
+  if (err.code == "11000") {
+    console.log(err)
+    res.status(400)
+    res.send({ msg: `already taken`, value: err.keyValue })
+  } else {
+    next(err)
+  }
+})
+app.use((err, req, res, next) => {
+  if (err.status) {
+    console.log('error here')
+    res.status(err.status).send({ msg: err.msg });
+  } else {
+    next(err);
+  }
+});
+
+app.use((err, req, res, next) => {
+  console.log(err)
+  res.status(500).send({ msg: "Internal server error", error: err });
+});
 
 module.exports = app;

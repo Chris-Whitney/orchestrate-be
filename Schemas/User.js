@@ -3,7 +3,7 @@ const mongoose = require("mongoose");
 const userSchema = new mongoose.Schema({
   name: { first: String, last: String },
   avatar_url: String,
-  username: { type: String, required: true },
+  username: { type: String, required: true, unique: true },
   email: { type: String, lowercase: true },
   location: {
     postcode: String,
@@ -13,7 +13,7 @@ const userSchema = new mongoose.Schema({
   instruments: [],
   group: [{ type: mongoose.SchemaTypes.ObjectId, ref: "Group" }],
   friends: [{ type: mongoose.SchemaTypes.ObjectId, ref: "User" }],
-  venues: [{type: mongoose.SchemaTypes.ObjectId, ref:"Venue"}]
+  venues: [{ type: mongoose.SchemaTypes.ObjectId, ref: "Venue" }]
 });
 
 

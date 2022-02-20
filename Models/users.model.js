@@ -8,27 +8,23 @@ exports.fetchUsers = async () => {
 
 exports.postUser = async (body) => {
   const { username, name, email, location, instruments, avatar_url } = body;
-  try {
-    await Users.create({
-      username,
-      avatar_url,
-      name: {
-        first: name.first,
-        last: name.last,
-      },
-      email,
-      location: {
-        postcode: location.postcode,
-        city: location.city,
-        country: location.country,
-      },
-      instruments,
-    });
-    let result = await Users.find({ username: username });
-    return result;
-  } catch (error) {
-    console.log(error);
-  }
+  await Users.create({
+    username,
+    avatar_url,
+    name: {
+      first: name.first,
+      last: name.last,
+    },
+    email,
+    location: {
+      postcode: location.postcode,
+      city: location.city,
+      country: location.country,
+    },
+    instruments,
+  });
+  let result = await Users.find({ username: username });
+  return result;
 };
 
 exports.deleteUser = async (body) => {
@@ -38,7 +34,7 @@ exports.deleteUser = async (body) => {
     let result = await Users.deleteOne({ _id: id });
     return result;
   } catch (error) {
-    console.log(error);
+    console.log("delete user error - ", error)
   }
 };
 
@@ -48,6 +44,6 @@ exports.fetchSingleUser = async (params) => {
     const query = await Users.findById(userId)
     return query
   } catch (error) {
-    console.log(error)
+    console.log("fetch single user error - ", error)
   }
 }

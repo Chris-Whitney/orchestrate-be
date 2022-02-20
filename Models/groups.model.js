@@ -8,22 +8,18 @@ exports.fetchGroups = async () => {
 
 exports.postGroup = async (body) => {
   const { owner, contact, name, avatar_url } = body;
-  try {
-    await Groups.create({
-      owner,
-      contact: {
-        name: contact.name,
-        email: contact.email,
-      },
-      name,
-      avatar_url,
-      members: [owner],
-    });
-    let result = await Groups.find({ owner });
-    return result;
-  } catch (error) {
-    console.log(error);
-  }
+  await Groups.create({
+    owner,
+    contact: {
+      name: contact.name,
+      email: contact.email,
+    },
+    name,
+    avatar_url,
+    members: [owner],
+  });
+  let result = await Groups.find({ name });
+  return result;
 };
 
 exports.deleteGroup = async (body) => {
