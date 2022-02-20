@@ -20,7 +20,6 @@ app.all("*", (req, res) => {
 });
 app.use((err, req, res, next) => {
   if (err.code == "11000") {
-    console.log(err)
     res.status(400)
     res.send({ msg: `already taken`, value: err.keyValue })
   } else {
@@ -29,7 +28,6 @@ app.use((err, req, res, next) => {
 })
 app.use((err, req, res, next) => {
   if (err.status) {
-    console.log('error here')
     res.status(err.status).send({ msg: err.msg });
   } else {
     next(err);
