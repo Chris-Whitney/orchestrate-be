@@ -1,5 +1,81 @@
 {
-	"GET /api": {
-		"description": "serves up a json representation of all the available endpoints of the api"
-	}
+	"GET": {
+		"GET /api": {
+			"description": "Returns Instructions on the API endpoints"
+		},
+		"GET /api/users": {
+			"description": "Returns an array of users",
+			"Example": {
+				"users": [
+					{
+						"name": {
+							"first": "",
+							"last": ""
+						},
+						"location": {
+							"postcode": "",
+							"city": "",
+							"country": ""
+						},
+						"_id": "",
+						"avatar_url": "",
+						"username": "",
+						"email": "",
+						"instruments": [""],
+						"group": ["groupID"],
+						"friends": ["userID"],
+						"venues": ["venuID"],
+						"__v": 0
+					}
+				]
+			}
+		},
+		"GET /api/groups": {
+			"description": "Returns an array of groups",
+			"Example": {
+				"groups": [
+					{
+						"contact": {
+							"name": "",
+							"email": ""
+						},
+						"_id": "",
+						"owner": "userID",
+						"name": "",
+						"avatar_url": "",
+						"members": ["userID"],
+						"__v": 0
+					}
+				]
+			}
+		},
+		"GET /api/venues": {
+			"description": "serves up a json representation of all the available endpoints of the api",
+			"Example": {
+				"venues": [
+					{
+						"location": {
+							"street": "",
+							"number": 0,
+							"postcode": "",
+							"city": "",
+							"country": ""
+						},
+						"contact": {
+							"name": "",
+							"number": "",
+							"email": ""
+						},
+						"_id": "",
+						"name": "",
+						"avatar_url": "",
+						"__v": 0
+					}
+				]
+			}
+		}
+	},
+	"POST": {},
+	"PATCH": {},
+	"DELETE": {}
 }
