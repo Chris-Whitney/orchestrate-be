@@ -1,15 +1,15 @@
 const app = require('../app')
 const request = require('supertest')
 const mongoose = require('mongoose')
-const { getIdbyUsername } = require('../utils/users.utils')
+
 
 beforeAll((done) => {
    done()
 })
 
-afterAll((done) => {
+afterAll(async (done) => {
    // Closing the connection to exit successfully.
-   mongoose.connection.close()
+   await mongoose.connection.close()
    done()
 })
 

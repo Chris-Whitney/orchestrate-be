@@ -18,6 +18,7 @@ app.use("/api", apiRouter)
 app.all("*", (req, res) => {
   res.status(404).send({ msg: "Invalid URL" });
 });
+
 app.use((err, req, res, next) => {
   if (err.code == "11000") {
     res.status(400)

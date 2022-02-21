@@ -1,9 +1,14 @@
 const Users = require("../Schemas/User.js");
-exports.getIdbyUsername = async (username) => {
+exports.getIdByUsername = async (username) => {
    const query = await Users.find({ username })
-   return query._id
+   return query[0].id
+
 }
 exports.userExists = async (username) => {
    const query = await Users.find({ username })
-   console.log(query)
+   if (typeof query[0] === "object") {
+      return true
+   } else {
+      return false
+   }
 }
