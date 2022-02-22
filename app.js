@@ -10,7 +10,8 @@ const { validePassword } = require("./utils/password.utils");
 const User = require("./Schemas/User");
 
 const app = express();
-
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }))
 dotenv.config();
 
 const sessionStore = new MongoStore({
@@ -18,8 +19,6 @@ const sessionStore = new MongoStore({
   collection: "session",
 });
 mongoose.connect(process.env.DATABASE_URL);
-
-app.use(express.json());
 
 app.use(
   session({
