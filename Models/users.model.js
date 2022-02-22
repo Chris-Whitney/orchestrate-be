@@ -1,5 +1,6 @@
 const { getFriendsList } = require("../Controllers/users.controller.js");
 const Users = require("../Schemas/User.js");
+const { genPassword } = require("../utils/password.utils.js");
 
 exports.fetchUsers = async () => {
   let query = await Users.find({});
@@ -8,6 +9,9 @@ exports.fetchUsers = async () => {
 };
 
 exports.postUser = async (body) => {
+  const saltHash = genPassword(body.password);
+  const salt = saltHash.salt;
+  const hash = saltHash.hash;
   const { username, name, email, location, instruments, avatar_url, password } =
     body;
   await Users.create({
@@ -24,7 +28,8 @@ exports.postUser = async (body) => {
       country: location.country,
     },
     instruments,
-    password,
+    salt,
+    hash,
   });
   let result = await Users.find({ username: username });
   return result;
@@ -86,8 +91,5 @@ exports.fetchVenues = async (id) => {
 
   let query = await Users.findById(userId).populate("venues");
 
-  return query.venues
+  return query.venues;
 };
-
-
-

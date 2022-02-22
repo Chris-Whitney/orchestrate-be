@@ -4,16 +4,75 @@ const apiRouter = require("./routers/api.router");
 const mongoose = require("mongoose");
 const passport = require("passport");
 const LocalStrategy = require("passport-local");
+const session = require("express-session");
+const MongoStore = require("connect-mongo");
+const { validePassword } = require("./utils/password.utils");
+const User = require("./Schemas/User");
 
 const app = express();
+
 dotenv.config();
 
+const sessionStore = new MongoStore({
+  mongoUrl: process.env.DATABASE_URL,
+  collection: "session",
+});
 mongoose.connect(process.env.DATABASE_URL);
-
 
 app.use(express.json());
 
+app.use(
+  session({
+    secret: "secret",
+    resave: false,
+    saveUninitialized: true,
+    store: sessionStore,
+    cookie: { maxAge: 1000 * 60 * 60 * 24 },
+  })
+);
+
+passport.use(
+  new LocalStrategy((username, password, done) => {
+    console.log("local strategy");
+    User.findOne({ username: username })
+      .then((user) => {
+        if (!user) {
+          console.log("invalid user");
+          return done(null, false);
+        }
+        const isValid = validePassword(password, user.hash, user.salt);
+        if (isValid) {
+          console.log("valid user, valid password");
+          return done(null, user);
+        } else {
+          console.log("valid user, invalid password");
+          done(null, false);
+        }
+      })
+      .catch((err) => {
+        return done(err);
+      });
+  })
+);
+
+passport.serializeUser((user, done) => done(null, user.id));
+passport.deserializeUser((userId, done) => {
+  User.findById(userId)
+    .then((user) => {
+      return done(null, user);
+    })
+    .catch((err) => done(err));
+});
+
 app.use("/api", apiRouter);
+
+app.post(
+  "/login",
+  passport.authenticate("local", {
+    successRedirect: "/",
+    failureRedirect: "/login",
+  })
+);
 
 // error handling:
 
