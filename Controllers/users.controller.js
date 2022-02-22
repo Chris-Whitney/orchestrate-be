@@ -8,7 +8,7 @@ const {
   fetchGroups,
   fetchVenues
 } = require("../Models/users.model");
-const { userExists } = require("../utils/users.utils");
+
 
 exports.getUsers = (req, res, next) => {
   fetchUsers().then((users) => {
@@ -66,7 +66,7 @@ exports.getGroupsList = (req, res, next) => {
 };
 
 exports.getVenuesList = (req, res, next) => {
-    fetchVenues(req.params).then((venues) => {
-        res.status(200).send({ venues })
-    });
+  fetchVenues(req.params).then((venues) => {
+    res.status(200).send({ venues })
+  });
 };

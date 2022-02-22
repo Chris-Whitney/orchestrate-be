@@ -1,8 +1,5 @@
 const { getFriendsList } = require("../Controllers/users.controller.js");
-const User = require("../Schemas/User.js");
 const Users = require("../Schemas/User.js");
-
-// passport.use(new LocalStrategy(User.authenticate()));
 
 exports.fetchUsers = async () => {
   let query = await Users.find({});
@@ -85,11 +82,11 @@ exports.fetchGroups = async (id) => {
 };
 
 exports.fetchVenues = async (id) => {
-  const { userId } = id; 
+  const { userId } = id;
 
   let query = await Users.findById(userId).populate("venues");
 
-  return query.venues 
+  return query.venues
 };
 
 
