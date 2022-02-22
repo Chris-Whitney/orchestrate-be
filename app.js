@@ -50,6 +50,7 @@ passport.use(
         }
       })
       .catch((err) => {
+        console.log(err);
         return done(err);
       });
   })
@@ -61,7 +62,10 @@ passport.deserializeUser((userId, done) => {
     .then((user) => {
       return done(null, user);
     })
-    .catch((err) => done(err));
+    .catch((err) => {
+      console.log(err);
+      done(err);
+    });
 });
 
 app.use("/api", apiRouter);
@@ -69,11 +73,23 @@ app.use("/api", apiRouter);
 app.post(
   "/login",
   passport.authenticate("local", {
-    successRedirect: "/",
-    failureRedirect: "/login",
+    successRedirect: "/pass",
+    failureRedirect: "/fail",
   })
 );
 
+app.get("/login", (req, res, next) => {
+  res.sendFile(__dirname + "/form.html");
+});
+app.post("/fail", (req, res, next) => {
+  console.log("failed");
+  res.status(200).send({ msg: "Invalid logging details" });
+});
+
+app.post("/pass", (req, res, next) => {
+  console.log("passed");
+  res.status(200).send({ msg: "valid logging details" });
+});
 // error handling:
 
 app.all("*", (req, res) => {
