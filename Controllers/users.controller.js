@@ -1,32 +1,72 @@
-const { fetchUsers, postUser, deleteUser, fetchSingleUser } = require('../Models/users.model');
-const { userExists } = require('../utils/users.utils');
+const {
+  fetchUsers,
+  postUser,
+  deleteUser,
+  fetchSingleUser,
+  patchSingleUser,
+  fetchFriends,
+  fetchGroups,
+  fetchVenues
+} = require("../Models/users.model");
+const { userExists } = require("../utils/users.utils");
 
 exports.getUsers = (req, res, next) => {
-    fetchUsers().then((users) => {
-        res.status(200).send({ users })
-    })
+  fetchUsers().then((users) => {
+    res.status(200).send({ users });
+  });
 };
 
 exports.saveUser = (req, res, next) => {
-    postUser(req.body).then(user => {
-        res.status(201).send({ user })
+  postUser(req.body)
+    .then((user) => {
+      res.status(201).send({ user });
     })
-        .catch(err => next(err))
+    .catch((err) => next(err));
 };
 
 exports.removeUser = (req, res, next) => {
-    deleteUser(req.body).then(() => {
-        res.status(204).send({});
+  deleteUser(req.body)
+    .then(() => {
+      res.status(204).send({});
     })
-        .catch(err => {
-            console.log('error caught')
-            next(err)
-        })
-}
+    .catch((err) => {
+      console.log("error caught");
+      next(err);
+    });
+};
 
 exports.getSingleUser = (req, res, next) => {
-    fetchSingleUser(req.params).then((user) => {
-        res.status(200).send({ user })
+  fetchSingleUser(req.params)
+    .then((user) => {
+      res.status(200).send({ user });
     })
-        .catch(err => next(err))
-}
+    .catch((err) => next(err));
+};
+
+exports.amendSingleUser = (req, res, next) => {
+  patchSingleUser(req.params, req.body)
+    .then((patch) => {
+      res.status(200).send({ patch });
+    })
+    .catch((err) => next(err));
+};
+
+exports.getFriendsList = (req, res, next) => {
+  fetchFriends(req.params)
+    .then((friends) => {
+      res.status(200).send({ friends });
+    })
+    .catch((err) => next(err));
+};
+
+exports.getGroupsList = (req, res, next) => {
+  fetchGroups(req.params).then((groups) => {
+    res.status(200).send({ groups });
+  });
+};
+
+exports.getVenuesList = (req, res, next) => {
+    fetchVenues(req.params).then((venues) => {
+        res.status(200).send({ venues })
+    });
+};

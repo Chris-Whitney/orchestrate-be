@@ -1,5 +1,5 @@
 const express = require('express');
-const { getVenues, saveVenue, removeVenue, getSingleVenue } = require('../Controllers/venues.controller');
+const { getVenues, saveVenue, removeVenue, getSingleVenue, amendSingleVenue } = require('../Controllers/venues.controller');
 venueRouter = express.Router()
 
 venueRouter.route('/')
@@ -9,5 +9,6 @@ venueRouter.route('/')
 
 venueRouter.route('/:venueId')
    .get(getSingleVenue)
+   .patch(amendSingleVenue)
 
 module.exports = venueRouter

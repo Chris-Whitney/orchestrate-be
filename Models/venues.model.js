@@ -35,7 +35,29 @@ exports.deleteVenue = async (body) => {
 };
 
 exports.fetchSingleVenue = async (params) => {
-  const { venueId } = params
-  const query = await Venues.findById(venueId)
-  return query
-}
+  const { venueId } = params;
+  const query = await Venues.findById(venueId);
+  return query;
+};
+
+exports.patchSingleVenue = async (id, info) => {
+  const { venueId } = id;
+  const { name, avatar_url, location, contact } = info;
+
+  let query = await Venues.findById(venueId);
+
+  query.name = name;
+  query.avatar_url = avatar_url;
+  query.location.street = location.street;
+  query.location.number = location.number;
+  query.location.postcode = location.postcode;
+  query.location.city = location.city;
+  query.location.country = location.country;
+  query.contact.name = contact.name;
+  query.contact.number = contact.number;
+  query.contact.email = contact.email;
+
+  await query.save();
+
+  return query;
+};

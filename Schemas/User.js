@@ -1,5 +1,7 @@
 const mongoose = require("mongoose");
 
+const passportLocalMongoose = require("passport-local-mongoose");
+
 const userSchema = new mongoose.Schema({
   name: { first: String, last: String },
   avatar_url: String,
@@ -11,11 +13,12 @@ const userSchema = new mongoose.Schema({
     country: String,
   },
   instruments: [],
+  password: { type: String, required: true },
   group: [{ type: mongoose.SchemaTypes.ObjectId, ref: "Group" }],
   friends: [{ type: mongoose.SchemaTypes.ObjectId, ref: "User" }],
-  venues: [{ type: mongoose.SchemaTypes.ObjectId, ref: "Venue" }]
+  venues: [{ type: mongoose.SchemaTypes.ObjectId, ref: "Venue" }],
 });
 
-
+userSchema.plugin(passportLocalMongoose);
 
 module.exports = mongoose.model("User", userSchema);

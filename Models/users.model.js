@@ -1,4 +1,8 @@
+const { getFriendsList } = require("../Controllers/users.controller.js");
+const User = require("../Schemas/User.js");
 const Users = require("../Schemas/User.js");
+
+// passport.use(new LocalStrategy(User.authenticate()));
 
 exports.fetchUsers = async () => {
   let query = await Users.find({});
@@ -7,7 +11,8 @@ exports.fetchUsers = async () => {
 };
 
 exports.postUser = async (body) => {
-  const { username, name, email, location, instruments, avatar_url } = body;
+  const { username, name, email, location, instruments, avatar_url, password } =
+    body;
   await Users.create({
     username,
     avatar_url,
@@ -22,6 +27,7 @@ exports.postUser = async (body) => {
       country: location.country,
     },
     instruments,
+    password,
   });
   let result = await Users.find({ username: username });
   return result;
@@ -30,20 +36,61 @@ exports.postUser = async (body) => {
 exports.deleteUser = async (body) => {
   const { id } = body;
 
-  try {
-    let result = await Users.deleteOne({ _id: id });
-    return result;
-  } catch (error) {
-    console.log("delete user error - ", error)
-  }
+  let result = await Users.deleteOne({ _id: id });
+  return result;
 };
 
 exports.fetchSingleUser = async (params) => {
-  const { userId } = params
-  try {
-    const query = await Users.findById(userId)
-    return query
-  } catch (error) {
-    console.log("fetch single user error - ", error)
-  }
-}
+  const { userId } = params;
+
+  const query = await Users.findById(userId);
+  return query;
+};
+
+exports.patchSingleUser = async (id, info) => {
+  const { userId } = id;
+  const { avatar_url, email, name, location, password } = info;
+
+  const query = await Users.findById(userId);
+
+  query.avatar_url = avatar_url;
+  query.email = email;
+  query.name.first = name.first;
+  query.name.last = name.last;
+  query.location.postcode = location.postcode;
+  query.location.city = location.city;
+  query.location.country = location.country;
+  query.password = password;
+
+  await query.save();
+
+  return query;
+};
+
+exports.fetchFriends = async (id) => {
+  const { userId } = id;
+
+  let query = await Users.findById(userId).populate("friends");
+
+  console.log(query.friends);
+  return query.friends;
+};
+
+exports.fetchGroups = async (id) => {
+  const { userId } = id;
+
+  let query = await Users.findById(userId).populate("group");
+
+  return query.group;
+};
+
+exports.fetchVenues = async (id) => {
+  const { userId } = id; 
+
+  let query = await Users.findById(userId).populate("venues");
+
+  return query.venues 
+};
+
+
+

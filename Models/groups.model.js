@@ -1,3 +1,4 @@
+const { query } = require("express");
 const Groups = require("../Schemas/Group");
 
 exports.fetchGroups = async () => {
@@ -24,20 +25,39 @@ exports.postGroup = async (body) => {
 
 exports.deleteGroup = async (body) => {
   const { id } = body;
-  try {
-    let result = await Groups.deleteOne({ _id: id });
-    return result;
-  } catch (error) {
-    console.log(error);
-  }
+
+  let result = await Groups.deleteOne({ _id: id });
+  return result;
 };
 
 exports.fetchSingleGroup = async (params) => {
-  const { groupId } = params
-  try {
-    const query = Groups.findById(groupId)
-    return query
-  } catch (error) {
-    console.log(error)
-  }
+  const { groupId } = params;
+  const query = Groups.findById(groupId);
+  return query;
+};
+
+exports.patchSingleGroup = async (id, info) => {
+  const { groupId } = id;
+  const { name, avatar_url, contact } = info;
+
+  const query = await Groups.findById(groupId);
+
+  query.name = name;
+  query.avatar_url = avatar_url;
+  query.contact.name = contact.name;
+  query.contact.email = contact.email;
+
+  await query.save();
+
+  return query;
+};
+
+exports.fetchMembers = async (id) => {
+  const {groupId } = id;
+
+  const query = await Groups.findById(groupId).populate('members');
+
+
+  return query.members;
+  
 }

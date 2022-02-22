@@ -1,4 +1,4 @@
-const { fetchVenues, postVenue, deleteVenue, fetchSingleVenue } = require('../Models/venues.model');
+const { fetchVenues, postVenue, deleteVenue, fetchSingleVenue, patchSingleVenue} = require('../Models/venues.model');
 
 
 exports.getVenues = (req, res, next) => {
@@ -29,5 +29,11 @@ exports.getSingleVenue = (req, res, next) => {
         res.status(200).send({ venue })
     }).catch(err => {
         next(err)
+    })
+};
+
+exports.amendSingleVenue = (req, res, next) => {
+    patchSingleVenue(req.params, req.body).then((patch) => {
+        res.status(200).send({patch})
     })
 }
