@@ -18,7 +18,7 @@ const sessionStore = new MongoStore({
   mongoUrl: "mongodb+srv://Orchestrate:Nctcch22@caffeineo1.8izcc.mongodb.net/orchestrate",
   collection: "session",
 });
-mongoose.connect(process.env.DATABASE_URL);
+mongoose.connect("mongodb+srv://Orchestrate:Nctcch22@caffeineo1.8izcc.mongodb.net/orchestrate");
 
 app.use(
   session({
