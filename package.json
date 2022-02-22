@@ -6,7 +6,8 @@
 	"scripts": {
 		"leaks": "jest --runInBand --detectOpenHandles",
 		"test": "jest --watch",
-		"server": "nodemon listen.js"
+		"server": "nodemon listen.js",
+		"start": "node listen.js"
 	},
 	"repository": {
 		"type": "git",
