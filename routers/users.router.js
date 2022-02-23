@@ -5,11 +5,11 @@ userRouter = express.Router()
 userRouter.route('/')
    .get(getUsers)
    .post(saveUser)
-   .delete(removeUser)
-
+   
 userRouter.route('/:userId')
    .get(getSingleUser)
    .patch(amendSingleUser)
+   .delete(removeUser)
 
 userRouter.route('/:userId/friends')
    .get(getFriendsList)

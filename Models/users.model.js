@@ -1,4 +1,3 @@
-const { getFriendsList } = require("../Controllers/users.controller.js");
 const Users = require("../Schemas/User.js");
 const { genPassword } = require("../utils/password.utils.js");
 
@@ -35,10 +34,10 @@ exports.postUser = async (body) => {
   return result;
 };
 
-exports.deleteUser = async (body) => {
-  const { id } = body;
+exports.deleteUser = async (params) => {
+  const { userId } = params;
 
-  let result = await Users.deleteOne({ _id: id });
+  let result = await Users.deleteOne({ _id: userId });
   return result;
 };
 

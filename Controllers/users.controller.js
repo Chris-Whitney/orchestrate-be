@@ -25,7 +25,7 @@ exports.saveUser = (req, res, next) => {
 };
 
 exports.removeUser = (req, res, next) => {
-  deleteUser(req.body)
+  deleteUser(req.params)
     .then(() => {
       res.status(204).send({});
     })
