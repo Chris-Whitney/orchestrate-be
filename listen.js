@@ -2,8 +2,8 @@ const app = require("./app");
 const Group = require("./Schemas/Group");
 const User = require("./Schemas/User");
 
-app.listen(9090, async () => {
-  console.log("listening");
+const { PORT = 9090 } = process.env;
+app.listen(PORT, () => console.log(`Listening on ${PORT}...`));
 
   // await User.create({
   //   username: 'Billie',
@@ -23,5 +23,3 @@ app.listen(9090, async () => {
   // query[0].venues = ['620fbd088a86c442a7083532']
   // await query[0].save();
 
-
-});

@@ -17,14 +17,14 @@ app.use(express.urlencoded({ extended: true }));
 dotenv.config();
 
 const sessionStore = new MongoStore({
-  mongoUrl: "mongodb+srv://Orchestrate:Nctcch22@caffeineo1.8izcc.mongodb.net/orchestrate",
+  mongoUrl: process.env.DATABASE_URL,
   collection: "session",
 });
-mongoose.connect("mongodb+srv://Orchestrate:Nctcch22@caffeineo1.8izcc.mongodb.net/orchestrate");
+mongoose.connect(process.env.DATABASE_URL);
 
 app.use(
   session({
-    secret: "secret",
+    secret: process.env.SECRET,
     resave: false,
     saveUninitialized: true,
     store: sessionStore,
