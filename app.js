@@ -8,10 +8,12 @@ const session = require("express-session");
 const MongoStore = require("connect-mongo");
 const { validePassword } = require("./utils/password.utils");
 const User = require("./Schemas/User");
+const cors = require("cors");
 
 const app = express();
+app.use(cors());
 app.use(express.json());
-app.use(express.urlencoded({ extended: true }))
+app.use(express.urlencoded({ extended: true }));
 dotenv.config();
 
 const sessionStore = new MongoStore({
@@ -80,12 +82,12 @@ app.post(
 app.get("/login", (req, res, next) => {
   res.sendFile(__dirname + "/form.html");
 });
-app.post("/fail", (req, res, next) => {
+app.get("/fail", (req, res, next) => {
   console.log("failed");
   res.status(200).send({ msg: "Invalid logging details" });
 });
 
-app.post("/pass", (req, res, next) => {
+app.get("/pass", (req, res, next) => {
   console.log("passed");
   res.status(200).send({ msg: "valid logging details" });
 });
