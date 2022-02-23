@@ -92,3 +92,19 @@ exports.fetchVenues = async (id) => {
 
   return query.venues;
 };
+
+exports.fetchUsersByQuery = async (queries) => {
+  const { name = false, email = false, username = false } = queries;
+  let search = {}
+  if (name) {
+    const names = name.split(' ') 
+    search.name = {}
+    search.name.first = names[0]
+    search.name.last = names[1]
+  }
+  if (email) search.email = email
+  if (username) search.username = username
+  let query = await Users.find(search)
+
+  return query;
+}

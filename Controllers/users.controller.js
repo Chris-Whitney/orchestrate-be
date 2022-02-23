@@ -6,7 +6,8 @@ const {
   patchSingleUser,
   fetchFriends,
   fetchGroups,
-  fetchVenues
+  fetchVenues,
+  fetchUsersByQuery
 } = require("../Models/users.model");
 
 
@@ -68,5 +69,11 @@ exports.getGroupsList = (req, res, next) => {
 exports.getVenuesList = (req, res, next) => {
   fetchVenues(req.params).then((venues) => {
     res.status(200).send({ venues })
+  });
+};
+
+exports.searchUsers = (req, res, next) => {
+  fetchUsersByQuery(req.query).then((users) => {
+    res.status(200).send({users})
   });
 };

@@ -1,11 +1,14 @@
 const express = require('express');
-const { getUsers, saveUser, removeUser, getSingleUser, amendSingleUser, getFriendsList, getGroupsList, getVenuesList} = require("../Controllers/users.controller");
+const { getUsers, saveUser, removeUser, getSingleUser, amendSingleUser, getFriendsList, getGroupsList, getVenuesList, searchUsers} = require("../Controllers/users.controller");
 userRouter = express.Router()
 
 userRouter.route('/')
    .get(getUsers)
    .post(saveUser)
    
+userRouter.route('/search')
+   .get(searchUsers)
+
 userRouter.route('/:userId')
    .get(getSingleUser)
    .patch(amendSingleUser)
