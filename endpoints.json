@@ -24,11 +24,22 @@
 						"instruments": [""],
 						"group": ["groupID"],
 						"friends": ["userID"],
-						"venues": ["venuID"],
+						"venues": ["venueID"],
 						"__v": 0
 					}
 				]
 			}
+		},
+		"GET /api/users/search" : {
+			"description": "Returns an array of users that match the query",
+			"queries": {
+				"username" : "username",
+				"name": "first last",
+				"email": "email"
+			} 
+		},
+		"GET /api/users/:user_id": {
+			"description": "returns single user object"
 		},
 		"GET /api/groups": {
 			"description": "Returns an array of groups",
@@ -49,8 +60,11 @@
 				]
 			}
 		},
+		"GET /api/groups/:group_id" : {
+			"description": "returns single group"
+		},
 		"GET /api/venues": {
-			"description": "serves up a json representation of all the available endpoints of the api",
+			"description": "returns an array of venues",
 			"Example": {
 				"venues": [
 					{
@@ -73,6 +87,10 @@
 					}
 				]
 			}
+		},
+		"GET /api/venues/:venue_id" :
+		{
+			"description": "returns single venue"
 		}
 	},
 	"POST": {},

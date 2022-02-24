@@ -1,11 +1,11 @@
-const express = require('express');
-const { loginFail, loginPass, fetchLogin } = require('../Controllers/login.controller');
+const express = require('express')
+const { loginFail, loginPass, fetchLogin, checkLogin } = require('../Controllers/login.controller')
 
 const loginRouter = express.Router()
 
-
 loginRouter.route('/')
-    .get(fetchLogin);
+    .get(fetchLogin)
+    .post(checkLogin)
 
 loginRouter.route('/fail')
     .get(loginFail)

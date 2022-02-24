@@ -5,7 +5,7 @@ const passport = require("passport");
 const LocalStrategy = require("passport-local");
 const session = require("express-session");
 const MongoStore = require("connect-mongo");
-const { validePassword } = require("./utils/password.utils");
+const { validPassword } = require("./utils/password.utils");
 const User = require("./Schemas/User");
 const cors = require("cors");
 const loginRouter = require('./routers/login.router');
@@ -42,7 +42,7 @@ passport.use(
           console.log("invalid user");
           return done(null, false);
         }
-        const isValid = validePassword(password, user.hash, user.salt);
+        const isValid = validPassword(password, user.hash, user.salt);
         if (isValid) {
           console.log("valid user, valid password");
           return done(null, user);
@@ -71,17 +71,8 @@ passport.deserializeUser((userId, done) => {
 });
 
 app.use("/api", apiRouter);
+app.use("/login", loginRouter);
 
-app.post(
-  "/login",
-  passport.authenticate("local", {
-    successRedirect: "/login/pass",
-    failureRedirect: "/login/fail",
-  })
-  );
-  
-  app.use("/login", loginRouter);
-  
 // error handling:
 
 app.all("*", (req, res) => {
