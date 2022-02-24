@@ -1,6 +1,5 @@
 const express = require("express");
 const dotenv = require("dotenv");
-const apiRouter = require("./routers/api.router");
 const mongoose = require("mongoose");
 const passport = require("passport");
 const LocalStrategy = require("passport-local");
@@ -9,6 +8,8 @@ const MongoStore = require("connect-mongo");
 const { validePassword } = require("./utils/password.utils");
 const User = require("./Schemas/User");
 const cors = require("cors");
+const loginRouter = require('./routers/login.router');
+const apiRouter = require('./routers/api.router');
 
 const app = express();
 app.use(cors());
@@ -74,23 +75,13 @@ app.use("/api", apiRouter);
 app.post(
   "/login",
   passport.authenticate("local", {
-    successRedirect: "/pass",
-    failureRedirect: "/fail",
+    successRedirect: "/login/pass",
+    failureRedirect: "/login/fail",
   })
-);
-
-app.get("/login", (req, res, next) => {
-  res.sendFile(__dirname + "/form.html");
-});
-app.get("/fail", (req, res, next) => {
-  console.log("failed");
-  res.status(200).send({ msg: "Invalid logging details" });
-});
-
-app.get("/pass", (req, res, next) => {
-  console.log("passed");
-  res.status(200).send({ msg: "valid logging details" });
-});
+  );
+  
+  app.use("/login", loginRouter);
+  
 // error handling:
 
 app.all("*", (req, res) => {

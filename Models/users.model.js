@@ -11,25 +11,27 @@ exports.postUser = async (body) => {
   const saltHash = genPassword(body.password);
   const salt = saltHash.salt;
   const hash = saltHash.hash;
-  const { username, name, email, location, instruments, avatar_url, password } =
+  const { username, name = false, email, location = false, instruments = false, avatar_url = false } =
     body;
-  await Users.create({
-    username,
-    avatar_url,
-    name: {
-      first: name.first,
-      last: name.last,
-    },
-    email,
-    location: {
-      postcode: location.postcode,
-      city: location.city,
-      country: location.country,
-    },
-    instruments,
-    salt,
-    hash,
-  });
+    const newUser = {}
+    newUser.username = username
+    newUser.email = email
+    newUser.hash = hash
+    newUser.salt = salt
+    if (name) newUser.name = name
+    
+    if (avatar_url) {
+      newUser.avatar_url = avatar_url
+    }
+    else {
+      newUser.avatar_url = `https://avatars.dicebear.com/api/adventurer/${username}.svg`
+    }
+    if (location) newUser.location = location
+
+    if (instruments) newUser.instruments = instruments
+    
+  await Users.create(newUser);
+
   let result = await Users.find({ username: username });
   return result;
 };
