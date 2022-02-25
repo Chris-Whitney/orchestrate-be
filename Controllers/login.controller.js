@@ -12,7 +12,7 @@ exports.loginPass = (req, res, next) => {
     res.status(200).send({ msg: 'Success', user: user })
 })
 }
-  
+
 exports.fetchLogin = (req, res, next) => {
     res.sendFile(__dirname + "/form.html");
     }
