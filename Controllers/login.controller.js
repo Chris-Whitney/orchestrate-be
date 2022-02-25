@@ -9,7 +9,7 @@ exports.loginFail = (req, res, next) => {
 exports.loginPass = (req, res, next) => {
   //  const userId = { userId: req.session.passport.user };
   // fetchSingleUser(userId).then((user) => {
-  res.status(200).send({ msg: "Success", session: req.session, store: req.sessionStore, id: req.sessionID, user: req.user._id });
+  res.status(200).send({ msg: "Success", session: req.session, store: req.sessionStore, id: req.sessionID, user: req.user });
   // })
 };
 
@@ -17,7 +17,6 @@ exports.fetchLogin = (req, res, next) => {
   res.sendFile(__dirname + "/form.html");
 };
 
-exports.checkLogin = passport.authenticate("local", {
-  successRedirect: "/login/pass",
-  failureRedirect: "/login/fail",
+exports.checkLogin = passport.authenticate("local", (req, res, next) => {
+  res.status(200).send({ user: req.user })
 }); 
