@@ -15,6 +15,7 @@ const venueSchema = new mongoose.Schema({
     number: String,
     email: String,
   },
+  owner: { type: mongoose.SchemaTypes.ObjectId, ref: "User" },
 });
 
 module.exports = mongoose.model("Venue", venueSchema);

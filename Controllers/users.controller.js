@@ -6,7 +6,9 @@ const {
   patchSingleUser,
   fetchFriends,
   fetchGroups,
-  fetchVenues
+  fetchVenues,
+  postEvents,
+  fetchEvents
 } = require("../Models/users.model");
 
 
@@ -68,5 +70,19 @@ exports.getGroupsList = (req, res, next) => {
 exports.getVenuesList = (req, res, next) => {
   fetchVenues(req.params).then((venues) => {
     res.status(200).send({ venues })
-  });
+  })
+    .catch((err) => next(err));
 };
+
+exports.getEvents = (req, res, next) => {
+  fetchEvents(req.params).then(events => {
+    res.status(200).send({ events })
+  })
+    .catch((err) => next(err));
+}
+
+exports.saveEvents = (req, res, next) => {
+  postEvents(req.params, req.body).then(event => {
+    res.status(201).send({ event })
+  }).catch((err) => next(err));
+}

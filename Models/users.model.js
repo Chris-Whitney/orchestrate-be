@@ -79,17 +79,31 @@ exports.fetchFriends = async (id) => {
 };
 
 exports.fetchGroups = async (id) => {
-  const { userId } = id;
+  const { userId } = id
 
   let query = await Users.findById(userId).populate("group");
 
-  return query.group;
+  return query.group
 };
 
 exports.fetchVenues = async (id) => {
-  const { userId } = id;
+  const { userId } = id
 
   let query = await Users.findById(userId).populate("venues");
 
   return query.venues;
 };
+
+exports.postEvents = async (id, info) => {
+  const { userId } = id
+  const query = await Users.findById(userId)
+  query.events.push(info)
+  query.save()
+  return query.events
+}
+
+exports.fetchEvents = async (id) => {
+  const { userId } = id
+  const query = await Users.findById(userId)
+  return query.events
+}

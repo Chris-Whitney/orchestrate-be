@@ -1,5 +1,5 @@
 const express = require('express');
-const { getUsers, saveUser, removeUser, getSingleUser, amendSingleUser, getFriendsList, getGroupsList, getVenuesList} = require("../Controllers/users.controller");
+const { getUsers, saveUser, removeUser, getSingleUser, amendSingleUser, getFriendsList, getGroupsList, getVenuesList, getEvents, saveEvents } = require("../Controllers/users.controller");
 userRouter = express.Router()
 
 userRouter.route('/')
@@ -18,6 +18,10 @@ userRouter.route('/:userId/groups')
    .get(getGroupsList)
 
 userRouter.route('/:userId/venues')
-.get(getVenuesList)
+   .get(getVenuesList)
+
+userRouter.route('/:userId/events')
+   .get(getEvents)
+   .post(saveEvents)
 
 module.exports = userRouter
