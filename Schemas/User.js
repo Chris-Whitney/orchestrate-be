@@ -13,7 +13,7 @@ const userSchema = new mongoose.Schema({
   instruments: [],
   hash: String,
   salt: String,
-  events: [{ to: { day: Number, year: Number, month: Number }, from: { day: Number, year: Number, month: Number } }],
+  events: [{title: String, to: { day: Number, year: Number, month: Number }, from: { day: Number, year: Number, month: Number } }],
   group: [{ type: mongoose.SchemaTypes.ObjectId, ref: "Group" }],
   friends: [{ type: mongoose.SchemaTypes.ObjectId, ref: "User" }],
   venues: [{ type: mongoose.SchemaTypes.ObjectId, ref: "Venue" }],
