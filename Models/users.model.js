@@ -123,3 +123,18 @@ exports.fetchUsersByQuery = async (queries) => {
 
   return query;
 }
+
+exports.deleteUserEvent = async (params) => {
+  const { eventId, userId } = params
+  const query = await Users.findById(userId)
+  let updatedEvents = []
+  for (let i = 0; i < query.events.length; i++) {
+    if ( query.events[i]._id === eventId ) {
+      continue
+    }
+    updatedEvents.push(query.events[i])
+  }
+  query.events = updatedEvents
+  await query.save()
+  return query.events
+}

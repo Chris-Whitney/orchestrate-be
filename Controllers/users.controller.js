@@ -9,7 +9,8 @@ const {
   fetchVenues,
   postEvents,
   fetchEvents,
-  fetchUsersByQuery
+  fetchUsersByQuery,
+  deleteUserEvent
 } = require("../Models/users.model");
 
 
@@ -90,5 +91,11 @@ exports.saveEvents = (req, res, next) => {
 exports.searchUsers = (req, res, next) => {
   fetchUsersByQuery(req.query).then((users) => {
     res.status(200).send({ users })
+  });
+};
+
+exports.deleteEvent = (req, res, next) => {
+  deleteUserEvent(req.params).then(() => {
+    res.status(204).send({})
   });
 };
