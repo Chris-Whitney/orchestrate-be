@@ -17,6 +17,7 @@ exports.fetchLogin = (req, res, next) => {
   res.sendFile(__dirname + "/form.html");
 };
 
-exports.checkLogin = passport.authenticate('local', { failureRedirect: '/login/fail' }), ((req, res) => {
-  res.status(200).send({ user: req.user });
-});
+exports.checkLogin = passport.authenticate("local", {
+  successRedirect: "/login/pass",
+  failureRedirect: "/login/fail",
+}); 
