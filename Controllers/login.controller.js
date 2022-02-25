@@ -9,7 +9,7 @@ exports.loginFail = (req, res, next) => {
 exports.loginPass = (req, res, next) => {
   //  const userId = { userId: req.session.passport.user };
   // fetchSingleUser(userId).then((user) => {
-  res.status(200).send({ msg: "Success", user: req });
+  res.status(200).send({ msg: "Success", user: req.session });
   // })
 };
 
