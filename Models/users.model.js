@@ -1,4 +1,3 @@
-const { getFriendsList } = require("../Controllers/users.controller.js");
 const Users = require("../Schemas/User.js");
 const { genPassword } = require("../utils/password.utils.js");
 
@@ -12,33 +11,35 @@ exports.postUser = async (body) => {
   const saltHash = genPassword(body.password);
   const salt = saltHash.salt;
   const hash = saltHash.hash;
-  const { username, name, email, location, instruments, avatar_url, password } =
+  const { username, name = false, email, location = false, instruments = false, avatar_url = false } =
     body;
-  await Users.create({
-    username,
-    avatar_url,
-    name: {
-      first: name.first,
-      last: name.last,
-    },
-    email,
-    location: {
-      postcode: location.postcode,
-      city: location.city,
-      country: location.country,
-    },
-    instruments,
-    salt,
-    hash,
-  });
+  const newUser = {}
+  newUser.username = username
+  newUser.email = email
+  newUser.hash = hash
+  newUser.salt = salt
+  if (name) newUser.name = name
+
+  if (avatar_url) {
+    newUser.avatar_url = avatar_url
+  }
+  else {
+    newUser.avatar_url = `https://avatars.dicebear.com/api/adventurer/${username}.svg`
+  }
+  if (location) newUser.location = location
+
+  if (instruments) newUser.instruments = instruments
+
+  await Users.create(newUser);
+
   let result = await Users.find({ username: username });
   return result;
 };
 
-exports.deleteUser = async (body) => {
-  const { id } = body;
+exports.deleteUser = async (params) => {
+  const { userId } = params;
 
-  let result = await Users.deleteOne({ _id: id });
+  let result = await Users.deleteOne({ _id: userId });
   return result;
 };
 
@@ -106,4 +107,19 @@ exports.fetchEvents = async (id) => {
   const { userId } = id
   const query = await Users.findById(userId)
   return query.events
+}
+exports.fetchUsersByQuery = async (queries) => {
+  const { name = false, email = false, username = false } = queries;
+  let search = {}
+  if (name) {
+    const names = name.split(' ')
+    search.name = {}
+    search.name.first = names[0]
+    search.name.last = names[1]
+  }
+  if (email) search.email = email
+  if (username) search.username = username
+  let query = await Users.find(search)
+
+  return query;
 }

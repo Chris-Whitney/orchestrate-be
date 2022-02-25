@@ -1,6 +1,6 @@
 const crypto = require("crypto");
 
-exports.validePassword = (password, hash, salt) => {
+exports.validPassword = (password, hash, salt) => {
   const verify = crypto
     .pbkdf2Sync(password, salt, 10000, 64, "sha512")
     .toString("hex");
