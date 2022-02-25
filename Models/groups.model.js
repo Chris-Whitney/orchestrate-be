@@ -61,3 +61,10 @@ exports.fetchMembers = async (id) => {
   return query.members;
   
 }
+
+exports.fetchOwners = async (id) => {
+  const {groupId } = id;
+const query = await Groups.findById(groupId).populate('owner');
+
+return query.owner;
+}

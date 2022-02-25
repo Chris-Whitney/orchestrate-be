@@ -1,10 +1,16 @@
+const { fetchSingleUser } = require('../Models/users.model')
+
 const passport = require('passport')
+
 exports.loginFail = (req, res, next) => {
     res.status(200).send({ msg: 'Login Failed'})
 }
 
 exports.loginPass = (req, res, next) => {
-    res.status(200).send({ msg: 'Login Successful'})
+    const userId = {userId : req.session.passport.user}
+    fetchSingleUser(userId).then((user) => {
+    res.status(200).send({ msg: 'Success', user: user })
+})
 }
 
 exports.fetchLogin = (req, res, next) => {

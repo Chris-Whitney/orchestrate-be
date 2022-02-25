@@ -1,5 +1,5 @@
 const express = require('express');
-const { getGroups, saveGroup, removeGroup, getSingleGroup, amendSingleGroup, getMembers } = require("../Controllers/groups.controller");
+const { getGroups, saveGroup, removeGroup, getSingleGroup, amendSingleGroup, getMembers, getOwners } = require("../Controllers/groups.controller");
 const groupRouter = express.Router()
 
 groupRouter.route('/')
@@ -13,5 +13,8 @@ groupRouter.route('/:groupId')
 
 groupRouter.route('/:groupId/members')
 .get(getMembers)
+
+groupRouter.route('/:groupId/owner')
+.get(getOwners)
 
 module.exports = groupRouter

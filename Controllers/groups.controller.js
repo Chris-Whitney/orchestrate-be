@@ -4,7 +4,8 @@ const {
   deleteGroup,
   fetchSingleGroup,
   patchSingleGroup,
-  fetchMembers
+  fetchMembers,
+  fetchOwners
 } = require("../Models/groups.model");
 
 exports.getGroups = (req, res, next) => {
@@ -56,5 +57,11 @@ exports.amendSingleGroup = (req, res, next) => {
 exports.getMembers = (req, res, next) => {
   fetchMembers(req.params).then((members) => {
     res.status(200).send({ members })
+  })
+};
+
+exports.getOwners = (req, res, next) => {
+  fetchOwners(req.params).then((owner) => {
+    res.status(200).send({owner})
   })
 };
