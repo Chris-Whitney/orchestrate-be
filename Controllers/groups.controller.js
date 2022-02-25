@@ -16,7 +16,7 @@ exports.getGroups = (req, res, next) => {
     .catch((err) => {
       next(err);
     });
-};
+};  
 
 exports.saveGroup = (req, res, next) => {
   postGroup(req.body)
