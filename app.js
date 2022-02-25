@@ -23,13 +23,14 @@ const sessionStore = new MongoStore({
 });
 mongoose.connect(process.env.DATABASE_URL);
 
+app.set('trust proxy', 1)
 app.use(
   session({
     secret: process.env.SECRET,
     resave: false,
     saveUninitialized: true,
     store: sessionStore,
-    cookie: { maxAge: 1000 * 60 * 60 * 24 },
+    cookie: { secure: true, maxAge: 1000 * 60 * 60 * 24 },
   })
 );
 
