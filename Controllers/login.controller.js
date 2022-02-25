@@ -20,4 +20,4 @@ exports.fetchLogin = (req, res, next) => {
 exports.checkLogin = passport.authenticate("local", {
   successRedirect: "/login/pass",
   failureRedirect: "/login/fail",
-});
+}); 
