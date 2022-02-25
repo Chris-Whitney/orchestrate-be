@@ -21,4 +21,4 @@ exports.checkLogin = passport.authenticate("local", {
         successRedirect: "/login/pass",
         failureRedirect: "/login/fail",
     })
-    
+        
