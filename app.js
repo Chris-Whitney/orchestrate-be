@@ -22,14 +22,14 @@ const sessionStore = new MongoStore({
   collection: "session",
 });
 mongoose.connect(process.env.DATABASE_URL);
-
+app.set('trust proxy', 1);
 app.use(
   session({
     secret: process.env.SECRET,
     resave: false,
     saveUninitialized: true,
     store: sessionStore,
-    cookie: { maxAge: 1000 * 60 * 60 * 24 },
+    cookie: { secure: true, maxAge: 1000 * 60 * 60 * 24 },
   })
 );
 
@@ -58,8 +58,12 @@ passport.use(
   })
 );
 
-passport.serializeUser((user, done) => done(null, user.id));
+passport.serializeUser((user, done) => {
+  console.log(user.id, "< SEARIAL")
+  return done(null, user.id)
+});
 passport.deserializeUser((userId, done) => {
+  console.log(userId, " Deserialize <---")
   User.findById(userId)
     .then((user) => {
       return done(null, user);
@@ -69,6 +73,8 @@ passport.deserializeUser((userId, done) => {
       done(err);
     });
 });
+app.use(passport.initialize())
+app.use(passport.session())
 
 app.use("/api", apiRouter);
 app.use("/login", loginRouter);

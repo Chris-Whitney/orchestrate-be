@@ -1,16 +1,17 @@
 const { fetchSingleUser } = require("../Models/users.model");
 
 const passport = require("passport");
+const app = require("../app");
 
 exports.loginFail = (req, res, next) => {
-  res.status(200).send({ msg: "Login Failed" });
+  res.status(200).send({ msg: "Failed" });
 };
 
 exports.loginPass = (req, res, next) => {
   //  const userId = { userId: req.session.passport.user };
   // fetchSingleUser(userId).then((user) => {
   console.log(req.session.passport)
-  res.status(200).send({ msg: "Success", session: req.session, store: req.sessionStore, id: req.sessionID, user: req.user });
+  res.status(200).send({ msg: "Success", user: req.user });
   // })
 };
 
