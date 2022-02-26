@@ -68,3 +68,4 @@ const query = await Groups.findById(groupId).populate('owner');
 
 return query.owner;
 }
+    
