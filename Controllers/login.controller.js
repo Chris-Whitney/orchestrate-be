@@ -11,7 +11,7 @@ exports.loginPass = (req, res, next) => {
   //  const userId = { userId: req.session.passport.user };
   // fetchSingleUser(userId).then((user) => {
   console.log(req.session.passport)
-  res.status(200).send({ msg: "Success", user: req.user });
+  res.status(200).send({ msg: "Success 01", user: req.user });
   // })
 };
 
