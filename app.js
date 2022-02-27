@@ -46,7 +46,6 @@ app.use(
 
 passport.use(
   new LocalStrategy((username, password, done) => {
-    console.log("local strategy");
     User.findOne({ username: username })
       .then((user) => {
         if (!user) {
@@ -55,26 +54,21 @@ passport.use(
         }
         const isValid = validPassword(password, user.hash, user.salt);
         if (isValid) {
-          console.log("valid user, valid password");
           return done(null, user);
         } else {
-          console.log("valid user, invalid password");
           done(null, false);
         }
       })
       .catch((err) => {
-        console.log(err);
         return done(err);
       });
   })
 );
 
 passport.serializeUser((user, done) => {
-  console.log(user.id, "< SEARIAL")
   return done(null, user.id)
 });
 passport.deserializeUser((userId, done) => {
-  console.log(userId, " Deserialize <---")
   User.findById(userId)
     .then((user) => {
       return done(null, user);

@@ -3,7 +3,6 @@ const { genPassword } = require("../utils/password.utils.js");
 
 exports.fetchUsers = async () => {
   let query = await Users.find({});
-
   return query;
 };
 
@@ -129,12 +128,13 @@ exports.deleteUserEvent = async (params) => {
   const query = await Users.findById(userId)
   let updatedEvents = []
   for (let i = 0; i < query.events.length; i++) {
-    if ( query.events[i]._id === eventId ) {
+    if (query.events[i]._id === eventId) {
+      console.log("event found")
       continue
     }
     updatedEvents.push(query.events[i])
   }
   query.events = updatedEvents
-  await query.save()
+  query.save()
   return query.events
 }
