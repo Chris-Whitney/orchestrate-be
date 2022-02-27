@@ -95,7 +95,7 @@ exports.searchUsers = (req, res, next) => {
 };
 
 exports.deleteEvent = (req, res, next) => {
-  deleteUserEvent(req.params).then(() => {
-    res.status(204).send({})
+  deleteUserEvent(req.params).then((events) => {
+    res.status(204).send({ events })
   });
 };

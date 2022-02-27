@@ -26,8 +26,8 @@ userRouter.route('/:userId/venues')
 userRouter.route('/:userId/events')
    .get(getEvents)
    .post(saveEvents)
-   
-userRouter.route('/:userId/events/:event_id')
+
+userRouter.route('/:userId/events/:eventId')
    .delete(deleteEvent)
 
 module.exports = userRouter
