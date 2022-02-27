@@ -12,6 +12,17 @@ const loginRouter = require('./routers/login.router');
 const apiRouter = require('./routers/api.router');
 
 const app = express();
+app.use(function (req, res, next) {
+  res.header('Access-Control-Allow-Credentials', true);
+  res.header('Access-Control-Allow-Origin', req.headers.origin);
+  res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE');
+  res.header('Access-Control-Allow-Headers', 'X-Requested-With, X-HTTP-Method-Override, Content-Type, Accept');
+  if ('OPTIONS' == req.method) {
+    res.send(200);
+  } else {
+    next();
+  }
+});
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -22,14 +33,14 @@ const sessionStore = new MongoStore({
   collection: "session",
 });
 mongoose.connect(process.env.DATABASE_URL);
-
+app.set('trust proxy', 1);
 app.use(
   session({
     secret: process.env.SECRET,
     resave: false,
     saveUninitialized: true,
     store: sessionStore,
-    cookie: { maxAge: 1000 * 60 * 60 * 24 },
+    cookie: { secure: true, maxAge: 1000 * 60 * 60 * 24 },
   })
 );
 
@@ -58,8 +69,12 @@ passport.use(
   })
 );
 
-passport.serializeUser((user, done) => done(null, user.id));
+passport.serializeUser((user, done) => {
+  console.log(user.id, "< SEARIAL")
+  return done(null, user.id)
+});
 passport.deserializeUser((userId, done) => {
+  console.log(userId, " Deserialize <---")
   User.findById(userId)
     .then((user) => {
       return done(null, user);
@@ -69,6 +84,8 @@ passport.deserializeUser((userId, done) => {
       done(err);
     });
 });
+app.use(passport.initialize())
+app.use(passport.session())
 
 app.use("/api", apiRouter);
 app.use("/login", loginRouter);
