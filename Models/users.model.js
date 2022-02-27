@@ -24,7 +24,7 @@ exports.postUser = async (body) => {
     newUser.avatar_url = avatar_url
   }
   else {
-    newUser.avatar_url = `https://avatars.dicebear.com/api/adventurer/${username}.svg`
+    newUser.avatar_url = `https://avatars.dicebear.com/api/initials/${username}.svg`
   }
   if (location) newUser.location = location
 
