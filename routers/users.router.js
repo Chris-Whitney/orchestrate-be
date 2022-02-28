@@ -22,10 +22,10 @@ userRouter.route('/:userId/groups')
 
 userRouter.route('/:userId/venues')
    .get(getVenuesList)
-   .post(saveVenues)
+/*    .post(saveVenues)
 
 userRouter.route('/:userId/venues/:venueId')
-   .delete(removeVenue)
+   .delete(removeVenue) */
 
 userRouter.route('/:userId/events')
    .get(getEvents)
