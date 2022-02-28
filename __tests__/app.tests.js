@@ -218,13 +218,11 @@ describe("API/GROUPS", () => {
         .send(group)
         .expect(201)
         .then((res) => {
-          console.log(res.body.group);
           expect(typeof res.body.group).toBe("object");
           expect(res.body.group[0].name).toEqual("Steves Group");
           groupid = res.body.group[0]._id;
         })
         .then(() => {
-          console.log(groupid);
           return request(app)
             .delete("/api/groups")
             .send({ id: groupid })
@@ -261,13 +259,11 @@ describe("API/GROUPS", () => {
         .send(group)
         .expect(201)
         .then((res) => {
-          console.log(res.body.group);
           expect(typeof res.body.group).toBe("object");
           expect(res.body.group[0].name).toEqual("Steves Group");
           groupid = res.body.group[0]._id;
         })
         .then(() => {
-          console.log(groupid);
           return request(app)
             .delete("/api/groups")
             .send({ id: groupid })
@@ -331,13 +327,11 @@ describe("API/VENUES", () => {
         .send(venue)
         .expect(201)
         .then((res) => {
-          console.log(res.body.venue);
           expect(typeof res.body.venue).toBe("object");
           expect(res.body.venue[0].name).toEqual("testvenue");
           venueid = res.body.venue[0]._id;
         })
         .then(() => {
-          console.log(venueid);
           return request(app)
             .delete("/api/venues")
             .send({ id: venueid })
@@ -539,14 +533,14 @@ describe("Get venues", () => {
 });
 
 describe('Get members', () => {
-   describe('fetch members of a group', () => {
-      test('Status 200: should return a list of members for a specific group', () => {
-         return request(app)
-         .get('/api/groups/620fc4a5ad45abc5b6ee6547/members')
-         .expect(200)
-         .then((res) => {
-            expect(res.body.members[0].name.first).toEqual("Steve");
-         })
-      });
-   });
+  describe('fetch members of a group', () => {
+    test('Status 200: should return a list of members for a specific group', () => {
+      return request(app)
+        .get('/api/groups/620fc4a5ad45abc5b6ee6547/members')
+        .expect(200)
+        .then((res) => {
+          expect(res.body.members[0].name.first).toEqual("Steve");
+        })
+    });
+  });
 });

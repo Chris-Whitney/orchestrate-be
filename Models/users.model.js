@@ -73,8 +73,6 @@ exports.fetchFriends = async (id) => {
   const { userId } = id;
 
   let query = await Users.findById(userId).populate("friends");
-
-  console.log(query.friends);
   return query.friends;
 };
 
@@ -125,16 +123,12 @@ exports.fetchUsersByQuery = async (queries) => {
 
 exports.deleteUserEvent = async (params) => {
   const { eventId, userId } = params
-  console.log('in the delete')
-  console.log(eventId)
   const query = await Users.findById(userId)
   let updatedEvents = []
-  console.log(query)
   for (let i = 0; i < query.events.length; i++) {
     if (query.events[i].id === eventId) {
       continue
     }
-    console.log(query.events[i].id)
     updatedEvents.push(query.events[i])
   }
   query.events = updatedEvents

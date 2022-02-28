@@ -34,7 +34,6 @@ exports.removeUser = (req, res, next) => {
       res.status(204).send({});
     })
     .catch((err) => {
-      console.log("error caught");
       next(err);
     });
 };
