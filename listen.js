@@ -1,16 +1,35 @@
+
 const app = require("./app");
 const Group = require("./Schemas/Group");
 const User = require("./Schemas/User");
 
 const { PORT = 9090 } = process.env;
-app.listen(PORT, async () => {
+const server = app.listen(PORT, async () => {
   // const query = await User.find({ username: 'Steve'})
 
   // query[0].venues.push("6213739ee4ff4e521a587e2b")
   // await query[0].save()
   console.log(`Listening on ${PORT}...`)
 })
+const io = require("socket.io")(server, {
+  pingTimeout: 60000,
+  cors: {
+    origin: "http://localhost:3000"
+  }
+})
 
+io.on('connection', (socket) => {
+  console.log('connected to socket')
+  socket.on('setup', (user) => {
+    socket.join(user._id)
+    socket.emit("connected")
+    console.log(user._id)
+  })
+  socket.on('join chat', (room) => {
+    socket.join(room)
+    console.log('joined chat', room)
+  })
+})
 
   // await User.create({
   //   username: 'Billie',

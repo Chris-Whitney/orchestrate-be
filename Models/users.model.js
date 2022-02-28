@@ -135,3 +135,26 @@ exports.deleteUserEvent = async (params) => {
   query.save()
   return query.events
 }
+
+exports.postVenues = async (id) => {
+  const { userId } = id
+  const query = await Users.findById(userId)
+  query.venues.push(info)
+  query.save()
+  return query.events
+}
+
+exports.deleteVenues = async (params) => {
+  const { venueId, userId } = params
+  const query = await Users.findById(userId)
+  let updatedVenues = []
+  for (let i = 0; i < query.venues.length; i++) {
+    if (query.venues[i].id === venueId) {
+      continue
+    }
+    updatedVenues.push(query.venues[i])
+  }
+  query.venues = updatedVenues
+  query.save()
+  return query.venues
+}

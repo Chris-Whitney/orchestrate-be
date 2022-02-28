@@ -10,7 +10,9 @@ const {
   postEvents,
   fetchEvents,
   fetchUsersByQuery,
-  deleteUserEvent
+  deleteUserEvent,
+  postVenues,
+  deleteVenues
 } = require("../Models/users.model");
 
 
@@ -98,3 +100,14 @@ exports.deleteEvent = (req, res, next) => {
     res.status(204).send({ events })
   });
 };
+
+exports.saveVenues = (req, res, next) => {
+  postVenues(req.body).then(venues => {
+    res.status(200).send({ venues })
+  })
+}
+exports.removeVenues = (req, res, next) => {
+  deleteVenues(req.body).then(venues => {
+    res.status(204).send({ venues })
+  })
+}
