@@ -157,4 +157,4 @@ exports.deleteVenues = async (params) => {
   query.venues = updatedVenues
   query.save()
   return query.venues
-}
+} 
