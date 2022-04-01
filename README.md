@@ -11,10 +11,11 @@ https://orchestrate-co.herokuapp.com/api
  * Mongoose
  * Express
  * Passport JS
+ * Jest
 
 ## Requirements
 
-For development, you will only need Node.js installed on your environement.
+For development, you will only need Node.js installed on your environment.
 
 [Node](http://nodejs.org/) is really easy to install & now include [NPM](https://npmjs.org/).
 
@@ -26,12 +27,10 @@ For development, you will only need Node.js installed on your environement.
     
 ## Difficulties:
 
-Initially, we wanted to use Svelte. However there were several issues with documentation and trying to implement it with the backend that we had put  together. We ultimately decided to drop this tech in favour of React
- 
+We also had a set back with passport JS and express session, specifically with the cookie sessions. This was due to the backend being hoisted and the frontend was being run locally. CORS would not allow credentials to be sent without first being instructed of the origin of delivery. 
+
  ## Improvements:
- * Replace Promise by async functions
- * SQL injection vulnerabilities on the models files
- * Use `.route` for endpoints that share the same path
+ * add more CRUD functions and endpoints
 
 ## Group Members:
 - Chris Whitney
